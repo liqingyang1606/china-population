@@ -44,7 +44,7 @@ function useData(csvPath){
 //function calculate
 function CalculateGPO(arrA, arrB) {
     var result = [];
-    for(var i = 0; i < 30; i++)
+    for(var i = 0; i < 31; i++)
     {
         result.push(arrA[i]/arrB[i]);
     }
