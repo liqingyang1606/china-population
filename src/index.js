@@ -10,6 +10,7 @@ import { GeoMap } from "./geoMap";
 const mapUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-simplified.json";
 const gdpUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-GDP.csv";
 const prpNbsUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-population_NBS.csv";
+const gdppoUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-GDP_per_one.csv";
 
 // util functions
 function useMap(jsonPath) {
@@ -42,14 +43,14 @@ function useData(csvPath){
 }
 
 //function calculate
-function CalculateGPO(arrA, arrB) {
-    var result = [];
-    for(var i = 0; i < 31; i++)
-    {
-        result.push(arrA[i]/arrB[i]);
-    }
-    return result;
-}
+// function CalculateGPO(arrA, arrB) {
+//     var result = [];
+//     for(var i = 0; i < 31; i++)
+//     {
+//         result.push(arrA[i]/arrB[i]);
+//     }
+//     return result;
+// }
 
 // function component
 function App() {
@@ -64,7 +65,8 @@ function App() {
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
     const prpData = useData(prpNbsUrl); // read permanent resident population data
-    if(!map || !gdpData || !prpData) {
+    const gdppoData = useData(gdppoUrl); 
+    if(!map || !gdpData || !prpData || !gdppoData) {
         return <pre>Loading ...</pre>;
     }
     // hook related logic
@@ -76,11 +78,12 @@ function App() {
     console.log(gdpData);
     const gdpOneYear = gdpData.map(d => d[_key]);
     const prpOneYear = prpData.map(d => d[_key]);
-    const gdpPerOne = CalculateGPO(gdpOneYear, prpOneYear);;
-    console.log(gdpPerOne);
-    console.log(gdpOneYear);
+    const gdppoOneYear = gdppoData.map(d => d[_key]);
+    //const gdpPerOne = CalculateGPO(gdpOneYear, prpOneYear);
+    // console.log(gdpPerOne);
+    // console.log(gdpOneYear);
     const colormap = scaleSequential(interpolateBuPu)
-      .domain([min(gdpPerOne), max(gdpPerOne)]);
+      .domain([min(gdppoOneYear), max(gdppoOneYear)]);
     // return the whole visualization
     return <div>
         <div>
@@ -90,7 +93,7 @@ function App() {
         <svg width={WIDTH} height={HEIGHT}>
             <g>
                 <GeoMap map={map} colormap={colormap} width={geoWidth} height={geoHeight}
-                  data={gdpData} selyear={year} offsetX={margin.left} offsetY={margin.top}/>
+                  data={gdppoData} selyear={year} offsetX={margin.left} offsetY={margin.top}/>
             </g>
         </svg>
     </div>
