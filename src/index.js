@@ -7,8 +7,9 @@ import * as topojson from "topojson-client";
 import { GeoMap } from "./geoMap";
 
 // URLs for dataset
-const mapUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/source/china-provinces-simplified.json";
-const gdpUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/source/china-provinces-GDP.csv";
+const mapUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-simplified.json";
+const gdpUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-GDP.csv";
+const prpNbsUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-population_NBS.csv";
 
 // util functions
 function useMap(jsonPath) {
