@@ -5,6 +5,7 @@ import { scaleSequential, interpolateBuPu } from "d3";
 import * as topojson from "topojson-client";
 
 import { GeoMap } from "./geoMap";
+import { LineChart } from "./linechart";
 
 // URLs for dataset
 const mapUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-simplified.json";
@@ -56,10 +57,12 @@ function useData(csvPath){
 function App() {
     // hooks
     const [year, setYear] = React.useState('2005');
+    const [provinceFirst, setProvinceFirst] = React.useState('Anhui');
+    const [provinceSecond,setProvinceSecond] = React.useState('Heilongjiang');
     // constants
     const WIDTH = 2000;
     const HEIGHT = 2000;
-    const margin = {left: 50, right: 50, top: 50, bottom: 50};
+    const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
     const geoWidth = 1000, geoHeight = 600;  // geo-map size
     // read data
     const map = useMap(mapUrl);  // read map
@@ -75,13 +78,18 @@ function App() {
     };
     // colormap for geo-map:
     const _key = '_' + year;
-    //console.log(gdpData);
+    console.log(gdpData);
     const gdpOneYear = gdpData.map(d => d[_key]);
     const prpOneYear = prpData.map(d => d[_key]);
     const gdppoOneYear = gdppoData.map(d => d[_key]);
+    // set the province
+    const gdppoProvinceFirst = gdppoData.filter(d => d['Province'] === provinceFirst)[0];
+    // console.log(gdppoProvinceFirst);
+    const gdppoProvinceSecond = gdppoData.filter(d => d['Province'] === provinceSecond)[0];
+    // console.log(gdppoProvinceSecond);
     //const gdpPerOne = CalculateGPO(gdpOneYear, prpOneYear);
-    // console.log(gdpPerOne);
-    // console.log(gdpOneYear);
+    //console.log(gdpPerOne);
+    //console.log(gdpOneYear);
     const colormap = scaleSequential(interpolateBuPu)
       .domain([min(gdppoOneYear), max(gdppoOneYear)]);  
     // return the whole visualization
@@ -94,6 +102,12 @@ function App() {
             <g>
                 <GeoMap map={map} colormap={colormap} width={geoWidth} height={geoHeight}
                   data={gdppoData} selyear={year} offsetX={margin.left} offsetY={margin.top}/>
+            </g>
+        </svg>
+        <svg width={WIDTH} height={HEIGHT}>
+            <g>
+                <LineChart offsetX={50} offsetY={0}
+                    width={geoWidth} height={geoHeight} provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond}/>
             </g>
         </svg>
     </div>
