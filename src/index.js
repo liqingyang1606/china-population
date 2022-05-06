@@ -75,7 +75,7 @@ function App() {
     };
     // colormap for geo-map:
     const _key = '_' + year;
-    console.log(gdpData);
+    //console.log(gdpData);
     const gdpOneYear = gdpData.map(d => d[_key]);
     const prpOneYear = prpData.map(d => d[_key]);
     const gdppoOneYear = gdppoData.map(d => d[_key]);
@@ -83,7 +83,7 @@ function App() {
     // console.log(gdpPerOne);
     // console.log(gdpOneYear);
     const colormap = scaleSequential(interpolateBuPu)
-      .domain([min(gdppoOneYear), max(gdppoOneYear)]);
+      .domain([min(gdppoOneYear), max(gdppoOneYear)]);  
     // return the whole visualization
     return <div>
         <div>
