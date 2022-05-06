@@ -23,7 +23,7 @@ function useMap(jsonPath) {
 }
 function useData(csvPath){
     const [dataAll, setData] = React.useState(null);
-    const yearStart = 1992, yearEnd = 2020;
+    const yearStart = 2005, yearEnd = 2020;
     React.useEffect(() => {
         csv(csvPath).then(data => {
             data.forEach(d => {
@@ -40,10 +40,21 @@ function useData(csvPath){
     }, []);
     return dataAll;
 }
+
+//function calculate
+function CalculateGPO(arrA, arrB) {
+    var result = [];
+    for(var i = 0; i < 30; i++)
+    {
+        result.push(arrA[i]/arrB[i]);
+    }
+    return result;
+}
+
 // function component
 function App() {
     // hooks
-    const [year, setYear] = React.useState('2000');
+    const [year, setYear] = React.useState('2005');
     // constants
     const WIDTH = 2000;
     const HEIGHT = 2000;
@@ -51,8 +62,9 @@ function App() {
     const geoWidth = 1000, geoHeight = 600;  // geo-map size
     // read data
     const map = useMap(mapUrl);  // read map
-    const gdpData = useData(gdpUrl);
-    if(!map || !gdpData) {
+    const gdpData = useData(gdpUrl);    // read GDP data
+    const prpData = useData(prpNbsUrl); // read permanent resident population data
+    if(!map || !gdpData || !prpData) {
         return <pre>Loading ...</pre>;
     }
     // hook related logic
@@ -63,12 +75,16 @@ function App() {
     const _key = '_' + year;
     console.log(gdpData);
     const gdpOneYear = gdpData.map(d => d[_key]);
+    const prpOneYear = prpData.map(d => d[_key]);
+    const gdpPerOne = CalculateGPO(gdpOneYear, prpOneYear);;
+    console.log(gdpPerOne);
+    console.log(gdpOneYear);
     const colormap = scaleSequential(interpolateBuPu)
-      .domain([min(gdpOneYear), max(gdpOneYear)]);
+      .domain([min(gdpPerOne), max(gdpPerOne)]);
     // return the whole visualization
     return <div>
         <div>
-            <input key="slider" type="range" min='1992' max='2020' value={year} step='1' onChange={changeHandler}/>
+            <input key="slider" type="range" min='2005' max='2020' value={year} step='1' onChange={changeHandler}/>
             <input key="yearText" type="text" value={year} readOnly/>
         </div>
         <svg width={WIDTH} height={HEIGHT}>
