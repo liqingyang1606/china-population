@@ -103,19 +103,19 @@ function getPortion(dset, selyear) {
 function App() {
     // hooks
     const [year, setYear] = React.useState('2005');
-    const [provinceFirst, setProvinceFirst] = React.useState('Anhui');
-    const [provinceSecond,setProvinceSecond] = React.useState('Heilongjiang');
+    const [provinceFirst, setProvinceFirst] = React.useState('Beijing');          //for choosing the province of line chart
+    const [provinceSecond,setProvinceSecond] = React.useState('Heilongjiang');  //for choosing the province of line chart
     // constants
     const WIDTH = 2000;
     const HEIGHT = 2000;
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
-    const geoWidth = 1000, geoHeight = 600;  // geo-map size
+    const geoWidth = 1000, geoHeight = 600;  // geo-map & line chart size
     // read data
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
     //const prpData = useData(prpNbsUrl); // read permanent resident population data
-    const prpData = useDataPortion(prpNbsUrl);
-    const gdppoData = useData(gdppoUrl); 
+    const prpData = useDataPortion(prpNbsUrl);  // read permanent resident population and propotion data
+    const gdppoData = useData(gdppoUrl);
     if(!map || !gdpData || !prpData || !gdppoData) {
         return <pre>Loading ...</pre>;
     }
@@ -139,6 +139,11 @@ function App() {
     // Process data for line charts:
     const gdppoProvinceFirst = gdppoData.filter(d => d['Province'] === provinceFirst)[0];
     const gdppoProvinceSecond = gdppoData.filter(d => d['Province'] === provinceSecond)[0];
+    const prpPortionProvinceFirst = prpData.filter(d => d['Province'] === provinceFirst)[0];
+    const prpPortionProvinceSecond = prpData.filter(d => d['Province'] === provinceSecond)[0];
+    // console.log(prpPortionProvinceFirst);
+    // console.log(prpPortionProvinceSecond);
+
     // return the whole visualization
     return <div>
         <div>
@@ -153,10 +158,12 @@ function App() {
                   data={gdppoData} offsetX={xGeoRight} offsetY={yGeoRight} dkey={_key}/>
             </g>
         </svg>
-        <svg width={WIDTH} height={HEIGHT}>
+        <svg width={1.25*WIDTH} height={HEIGHT}>
             <g>
-                <LineChart offsetX={50} offsetY={0}
-                    width={geoWidth} height={geoHeight} provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond}/>
+                <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
+                    provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the resident population"}/>
+                <LineChart chartType={"GDP"} offsetX={1250 + 10} offsetY={yGeoRight} width={geoWidth} height={geoHeight} 
+                    provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond} yTag={"Per capita GDP (￥10000)"}/>
             </g>
         </svg>
     </div>
