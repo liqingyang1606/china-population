@@ -6,6 +6,7 @@ import * as topojson from "topojson-client";
 
 import { GeoMap } from "./geoMap";
 import { LineChart } from "./linechart";
+import { Tooltip } from "./tooltip";
 
 // URLs for dataset
 const mapUrl = "https://raw.githubusercontent.com/lyyyrx/InformationVisualization_FinalProject/main/SourceData/china-provinces-simplified.json";
@@ -103,8 +104,25 @@ function getPortion(dset, selyear) {
 function App() {
     // hooks
     const [year, setYear] = React.useState('2005');
+    const [selectedProvince, setSelectedProvince] = React.useState(null);
+    const [toolData, setToolData] = React.useState(null);
+    const [toolLeft, setToolLeft] = React.useState(null);
+    const [toolTop, setToolTop] = React.useState(null);
     const [provinceFirst, setProvinceFirst] = React.useState('Anhui');
     const [provinceSecond,setProvinceSecond] = React.useState('Heilongjiang');
+    // hook related functions
+    const mouseOverMap = (prov, event, key, value) => {
+        setSelectedProvince(prov);
+        setToolData({k:key, v:value});
+        setToolLeft(event.pageX);
+        setToolTop(event.pageY);
+    };
+    const mouseOutMap = () => {
+        setSelectedProvince(null);
+        setToolData(null);
+        setToolLeft(null);
+        setToolTop(null);
+    };
     // constants
     const WIDTH = 2000;
     const HEIGHT = 2000;
@@ -136,6 +154,10 @@ function App() {
     const yGeoLeft = margin.top;
     const xGeoRight = xGeoLeft + geoWidth + margin.gap;
     const yGeoRight = margin.top;
+    const xTextLeft = xGeoLeft + geoWidth / 2;
+    const yTextLeft = yGeoLeft + geoHeight + margin.gap;
+    const xTextRight = xGeoRight + geoWidth / 2;
+    const yTextRight = yGeoRight + geoHeight + margin.gap;
     // Process data for line charts:
     const gdppoProvinceFirst = gdppoData.filter(d => d['Province'] === provinceFirst)[0];
     const gdppoProvinceSecond = gdppoData.filter(d => d['Province'] === provinceSecond)[0];
@@ -148,11 +170,18 @@ function App() {
         <svg width={WIDTH} height={HEIGHT}>
             <g>
                 <GeoMap map={map} colormap={cmapl} width={geoWidth} height={geoHeight}
-                  data={prpData} offsetX={xGeoLeft} offsetY={yGeoLeft} dkey={"por_"+year}/>
+                  data={prpData} offsetX={xGeoLeft} offsetY={yGeoLeft} dkey={"por_"+year}
+                  MouseOver={mouseOverMap} MouseOut={mouseOutMap}
+                  selectedProv={selectedProvince}/>
+                <text x={xTextLeft} y={yTextLeft}>Porportion of Population</text>
                 <GeoMap map={map} colormap={cmapr} width={geoWidth} height={geoHeight}
-                  data={gdppoData} offsetX={xGeoRight} offsetY={yGeoRight} dkey={_key}/>
+                  data={gdppoData} offsetX={xGeoRight} offsetY={yGeoRight} dkey={_key}
+                  MouseOver={mouseOverMap} MouseOut={mouseOutMap}
+                  selectedProv={selectedProvince}/>
+                <text x={xTextRight} y={yTextRight}>GDP per capita</text>
             </g>
         </svg>
+        <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>
         <svg width={WIDTH} height={HEIGHT}>
             <g>
                 <LineChart offsetX={50} offsetY={0}
