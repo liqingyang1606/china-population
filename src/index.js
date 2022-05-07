@@ -5,6 +5,7 @@ import { scaleSequential, interpolateBuPu } from "d3";
 import * as topojson from "topojson-client";
 
 import { GeoMap } from "./geoMap";
+import { BarChart } from "./barchart";
 import { LineChart } from "./linechart";
 import { Tooltip } from "./tooltip";
 
@@ -104,12 +105,12 @@ function getPortion(dset, selyear) {
 function App() {
     // hooks
     const [year, setYear] = React.useState('2005');
-    const [selectedProvince, setSelectedProvince] = React.useState(null);
     const [toolData, setToolData] = React.useState(null);
     const [toolLeft, setToolLeft] = React.useState(null);
     const [toolTop, setToolTop] = React.useState(null);
     const [provinceFirst, setProvinceFirst] = React.useState('Beijing');
     const [provinceSecond,setProvinceSecond] = React.useState('Shanghai');
+    const [selectedProvince, setSelectedProvince] = React.useState(null);
     // hook related functions
     const mouseOverMap = (prov, event, key, value) => {
         setSelectedProvince(prov);
@@ -128,6 +129,7 @@ function App() {
     const HEIGHT = 2000;
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
     const geoWidth = 1000, geoHeight = 600;  // geo-map & line chart size
+    const barHeight = 1200, barWidth = 800;
     // read data
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
@@ -190,6 +192,12 @@ function App() {
                   MouseOver={mouseOverMap} MouseOut={mouseOutMap}
                   selectedProv={selectedProvince}/>
                 <text x={xTextRight} y={yTextRight}>GDP per capita</text>
+            </g>
+        </svg>
+        <svg width={WIDTH} height={HEIGHT}>
+            <g>
+                <BarChart offsetX={500} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
+                selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince} />
             </g>
         </svg>
         <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>
