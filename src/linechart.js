@@ -13,6 +13,8 @@ export function LineChart(props) {
     // {
 
     // }
+    // console.log(provinceOne['Province']);
+    // console.log(provinceTwo['Province']);
     var province1 = Object.values(provinceOne).slice(1);
     var province2 = Object.values(provinceTwo).slice(1);
     var p1 = Object.entries(provinceOne).slice(1);
@@ -82,10 +84,10 @@ export function LineChart(props) {
             <path d={line(p1)} stroke={"#2b83ba"} strokeWidth={5} fill={"none"} />
             <path d={line(p2)} stroke={"#fdae61"} strokeWidth={5} fill={"none"} />
             <text style={{ textAnchor:'start', fontSize:'18px'}} transform={`translate(${xScale(2020)}, ${yScale(p1[0][1])})`}>
-                            {"Beijing"}
+                            {provinceOne['Province']}
                 </text>
             <text style={{ textAnchor:'start', fontSize:'18px'}} transform={`translate(${xScale(2020)}, ${yScale(p2[0][1])})`}>
-                            {"Heilongjiang"}
+                            {provinceTwo['Province']}
                 </text>
             </g>
 }

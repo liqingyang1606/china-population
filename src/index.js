@@ -109,7 +109,7 @@ function App() {
     const [toolLeft, setToolLeft] = React.useState(null);
     const [toolTop, setToolTop] = React.useState(null);
     const [provinceFirst, setProvinceFirst] = React.useState('Beijing');
-    const [provinceSecond,setProvinceSecond] = React.useState('Heilongjiang');
+    const [provinceSecond,setProvinceSecond] = React.useState('Shanghai');
     // hook related functions
     const mouseOverMap = (prov, event, key, value) => {
         setSelectedProvince(prov);
@@ -140,6 +140,12 @@ function App() {
     // hook related logic
     const changeHandler = (event) => {
         setYear(event.target.value);
+    };
+    const handleProvinceFirstChange = (event) => {
+        setProvinceFirst(event.target.value);
+    };
+    const handleProvinceSecondChange = (event) => {
+        setProvinceSecond(event.target.value);
     };
     // Process data for geo-maps:
     const _key = '_' + year;
@@ -187,10 +193,81 @@ function App() {
             </g>
         </svg>
         <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>
-        <svg width={1.25*WIDTH} height={HEIGHT}>
+        <div>
+            <label>Province1: </label>
+            <select id="province1" name="province1" onChange={handleProvinceFirstChange}>
+                <option value="Beijing">Beijing</option>
+                <option value="Tianjin">Tianjin</option>
+                <option value="Hebei">Hebei</option>
+                <option value="Shanxi">Shanxi</option>
+                <option value="Neimenggu">Neimenggu</option>
+                <option value="Liaoning">Liaoning</option>
+                <option value="Jilin">Jilin</option>
+                <option value="Heilongjiang">Heilongjiang</option>
+                <option value="Shanghai">Shanghai</option>
+                <option value="Jiangsu">Jiangsu</option>
+                <option value="Zhejiang">Zhejiang</option>
+                <option value="Anhui">Anhui</option>
+                <option value="Fujian">Fujian</option>
+                <option value="Jiangxi">Jiangxi</option>
+                <option value="Shandong">Shandong</option>
+                <option value="Henan">Henan</option>
+                <option value="Hubei">Hubei</option>
+                <option value="Hunan">Hunan</option>
+                <option value="Guangdong">Guangdong</option>
+                <option value="Guangxi">Guangxi</option>
+                <option value="Hainan">Hainan</option>
+                <option value="Chongqing">Chongqing</option>
+                <option value="Sichuan">Sichuan</option>
+                <option value="Guizhou">Guizhou</option>
+                <option value="Yunnan">Yunnan</option>
+                <option value="Xizang">Xizang</option>
+                <option value="Shaanxi">Shaanxi</option>
+                <option value="Gansu">Gansu</option>
+                <option value="Qinghai">Qinghai</option>
+                <option value="Ningxia">Ningxia</option>
+                <option value="Xinjiang">Xinjiang</option>
+            </select>
+            <br/>
+            <label>Province2: </label>
+            <select id="province2" name="province2" defaultValue={'Shanghai'} onChange={handleProvinceSecondChange}>
+                <option value="Beijing">Beijing</option>
+                <option value="Tianjin">Tianjin</option>
+                <option value="Hebei">Hebei</option>
+                <option value="Shanxi">Shanxi</option>
+                <option value="Neimenggu">Neimenggu</option>
+                <option value="Liaoning">Liaoning</option>
+                <option value="Jilin">Jilin</option>
+                <option value="Heilongjiang">Heilongjiang</option>
+                <option value="Shanghai">Shanghai</option>
+                <option value="Jiangsu">Jiangsu</option>
+                <option value="Zhejiang">Zhejiang</option>
+                <option value="Anhui">Anhui</option>
+                <option value="Fujian">Fujian</option>
+                <option value="Jiangxi">Jiangxi</option>
+                <option value="Shandong">Shandong</option>
+                <option value="Henan">Henan</option>
+                <option value="Hubei">Hubei</option>
+                <option value="Hunan">Hunan</option>
+                <option value="Guangdong">Guangdong</option>
+                <option value="Guangxi">Guangxi</option>
+                <option value="Hainan">Hainan</option>
+                <option value="Chongqing">Chongqing</option>
+                <option value="Sichuan">Sichuan</option>
+                <option value="Guizhou">Guizhou</option>
+                <option value="Yunnan">Yunnan</option>
+                <option value="Xizang">Xizang</option>
+                <option value="Shaanxi">Shaanxi</option>
+                <option value="Gansu">Gansu</option>
+                <option value="Qinghai">Qinghai</option>
+                <option value="Ningxia">Ningxia</option>
+                <option value="Xinjiang">Xinjiang</option>
+            </select>
+        </div>
+        <svg id="linechart" width={1.25*WIDTH} height={HEIGHT}>
             <g>
                 <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
-                    provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the resident population"}/>
+                    provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the permanent resident population"}/>
                 <LineChart chartType={"GDP"} offsetX={1250 + 10} offsetY={yGeoRight} width={geoWidth} height={geoHeight} 
                     provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond} yTag={"Per capita GDP (￥10000)"}/>
             </g>
