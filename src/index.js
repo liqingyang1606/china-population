@@ -42,6 +42,37 @@ function useData(csvPath){
     }, []);
     return dataAll;
 }
+function useDataPortion(csvPath) {
+    const [dataAll, setData] = React.useState(null);
+    const yearStart = 2005, yearEnd = 2020;
+    React.useEffect(() => {
+        csv(csvPath).then(data => {
+            // convert & compute
+            var prpSum = {};
+            for(var i = yearStart; i <= yearEnd; i++) {
+                prpSum['_' + i] = 0;
+            }
+            data.forEach(d => {
+                var _key;
+                for(var i = yearStart; i <= yearEnd; i++) {
+                    _key = '_' + i;
+                    d[_key] = +d[_key];
+                    prpSum[_key] += d[_key];  // sum up
+                }
+            });
+            data.forEach(d => {
+                var k1, k2;
+                for(var i = yearStart; i <= yearEnd; i++) {
+                    k1 = '_' + i;
+                    k2 = "por_" + i;
+                    d[k2] = d[k1] / prpSum[k1];  // division
+                }
+            });
+            setData(data);
+        });
+    }, []);
+    return dataAll;
+}
 
 //function calculate
 // function CalculateGPO(arrA, arrB) {
@@ -52,6 +83,21 @@ function useData(csvPath){
 //     }
 //     return result;
 // }
+
+function getPortion(dset, selyear) {
+    const k1 = '_' + selyear;
+    const k2 = "por_" + selyear;
+    const selarr = dset.map(d => d[k1]);
+    // sum up the population of selected year
+    var sum_year = 0;
+    for(var i = 0; i < selarr.length; i++) {
+        sum_year += selarr[i];
+    }
+    // compute the porportion
+    dset.forEach(d => {
+        d[k2] = d[k1] / sum_year;
+    });
+}
 
 // function component
 function App() {
@@ -67,7 +113,8 @@ function App() {
     // read data
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
-    const prpData = useData(prpNbsUrl); // read permanent resident population data
+    //const prpData = useData(prpNbsUrl); // read permanent resident population data
+    const prpData = useDataPortion(prpNbsUrl);
     const gdppoData = useData(gdppoUrl); 
     if(!map || !gdpData || !prpData || !gdppoData) {
         return <pre>Loading ...</pre>;
@@ -76,22 +123,22 @@ function App() {
     const changeHandler = (event) => {
         setYear(event.target.value);
     };
-    // colormap for geo-map:
+    // Process data for geo-maps:
     const _key = '_' + year;
-    console.log(gdpData);
-    const gdpOneYear = gdpData.map(d => d[_key]);
-    const prpOneYear = prpData.map(d => d[_key]);
+    const prpOneYear = prpData.map(d => d["por_" + year]);
     const gdppoOneYear = gdppoData.map(d => d[_key]);
-    // set the province
+    //getPortion(prpData, year);
+    const cmapl = scaleSequential(interpolateBuPu)
+      .domain([min(prpOneYear), max(prpOneYear)]);  // left colormap
+    const cmapr = scaleSequential(interpolateBuPu)
+      .domain([min(gdppoOneYear), max(gdppoOneYear)]);  // right colormap
+    const xGeoLeft = margin.left;
+    const yGeoLeft = margin.top;
+    const xGeoRight = xGeoLeft + geoWidth + margin.gap;
+    const yGeoRight = margin.top;
+    // Process data for line charts:
     const gdppoProvinceFirst = gdppoData.filter(d => d['Province'] === provinceFirst)[0];
-    // console.log(gdppoProvinceFirst);
     const gdppoProvinceSecond = gdppoData.filter(d => d['Province'] === provinceSecond)[0];
-    // console.log(gdppoProvinceSecond);
-    //const gdpPerOne = CalculateGPO(gdpOneYear, prpOneYear);
-    //console.log(gdpPerOne);
-    //console.log(gdpOneYear);
-    const colormap = scaleSequential(interpolateBuPu)
-      .domain([min(gdppoOneYear), max(gdppoOneYear)]);  
     // return the whole visualization
     return <div>
         <div>
@@ -100,8 +147,10 @@ function App() {
         </div>
         <svg width={WIDTH} height={HEIGHT}>
             <g>
-                <GeoMap map={map} colormap={colormap} width={geoWidth} height={geoHeight}
-                  data={gdppoData} selyear={year} offsetX={margin.left} offsetY={margin.top}/>
+                <GeoMap map={map} colormap={cmapl} width={geoWidth} height={geoHeight}
+                  data={prpData} offsetX={xGeoLeft} offsetY={yGeoLeft} dkey={"por_"+year}/>
+                <GeoMap map={map} colormap={cmapr} width={geoWidth} height={geoHeight}
+                  data={gdppoData} offsetX={xGeoRight} offsetY={yGeoRight} dkey={_key}/>
             </g>
         </svg>
         <svg width={WIDTH} height={HEIGHT}>
