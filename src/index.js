@@ -111,6 +111,7 @@ function App() {
     const [provinceFirst, setProvinceFirst] = React.useState('Beijing');
     const [provinceSecond,setProvinceSecond] = React.useState('Shanghai');
     const [selectedProvince, setSelectedProvince] = React.useState(null);
+    const [sortMode, setSortMode] = React.useState(null);
     // hook related functions
     const mouseOverMap = (prov, event, key, value) => {
         setSelectedProvince(prov);
@@ -148,6 +149,9 @@ function App() {
     };
     const handleProvinceSecondChange = (event) => {
         setProvinceSecond(event.target.value);
+    };
+    const onValueChange = (event) => {
+        setSortMode(event.target.value);
     };
     // Process data for geo-maps:
     const _key = '_' + year;
@@ -194,10 +198,15 @@ function App() {
                 <text x={xTextRight} y={yTextRight}>GDP per capita</text>
             </g>
         </svg>
+        <div onChange={onValueChange}>
+            <input type="radio" value="Population" name="sort_mode"/> Population
+            <input type="radio" value="GDP" name="sort_mode"/> GDP
+        </div>
         <svg width={WIDTH} height={HEIGHT}>
             <g>
                 <BarChart offsetX={500} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
-                selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince} />
+                selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince}
+                mode={sortMode}/>
             </g>
         </svg>
         <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>
