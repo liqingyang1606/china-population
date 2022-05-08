@@ -1,4 +1,5 @@
 import React from "react";
+import { XAxis, YAxis } from "./axes";
 import { scaleLinear, scaleBand, area, max, min, curveBasis } from "d3";
 
 export function BarChart(props) {
@@ -39,9 +40,10 @@ export function BarChart(props) {
                 onMouseEnter={() => setSelectedProvince(d.Province)} 
                 onMouseOut={()=> setSelectedProvince(null)} />  
             ) }
+            <XAxis xScale={xScale} height={height} width={width} />
 
         <g transform={`translate(${0}, ${height/2})`}>
-            <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width/3}, ${height/2+10})`}>
+            <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width*2/5}, ${height/2+50})`}>
             {"GDP per capita"}
             </text>
             {gdpdata.map( d =>

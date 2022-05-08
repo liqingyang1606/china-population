@@ -3,11 +3,11 @@ import React from "react";
 export function XAxis (props) {
     const { xScale, height, width, axisLable } = props;
         return <g>
-            {<line x1={0} y1={height} x2={width} y2={height} stroke='black'/>}
+            {/*<line x1={0} y1={height} x2={width} y2={height} stroke='black'/>*/}
             {xScale.domain().map(tickValue =>
                 <g key={tickValue+'B'} transform={`translate(${xScale(tickValue)}, 0)`}>
                     <line y2={height} />
-                    <text style={{textAnchor: 'start', fontSize:'10px' }} y={height+3} transform={`rotate(75, 0, ${height+3})`}>
+                    <text style={{textAnchor: 'start', fontSize:'12px' }} y={height+3} transform={`rotate(75, 0, ${height+3})`}>
                         {tickValue}
                     </text>
                 </g>
