@@ -104,7 +104,7 @@ function getPortion(dset, selyear) {
 // function component
 function App() {
     // hooks
-    const [year, setYear] = React.useState('2005');
+    const [year, setYear] = React.useState('2012');
     const [toolData, setToolData] = React.useState(null);
     const [toolLeft, setToolLeft] = React.useState(null);
     const [toolTop, setToolTop] = React.useState(null);
@@ -126,11 +126,12 @@ function App() {
         setToolTop(null);
     };
     // constants
-    const WIDTH = 2000;
-    const HEIGHT = 2000;
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
     const geoWidth = 1000, geoHeight = 600;  // geo-map & line chart size
-    const barHeight = 1200, barWidth = 800;
+    const barHeight = 1200, barWidth = 1000;
+    const WIDTH_1 = 2000, HEIGHT_1 = 800;  // No.1 geo-map x 2
+    const WIDTH_2 = 2000, HEIGHT_2 = 1400;  // No.2 bar-chart x 1
+    const WIDTH_3 = 1.25 * WIDTH_1, HEIGHT_3 = HEIGHT_2;  // No.3 line-chart x 3
     // read data
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
@@ -184,7 +185,7 @@ function App() {
             <input key="slider" type="range" min='2005' max='2020' value={year} step='1' onChange={changeHandler}/>
             <input key="yearText" type="text" value={year} readOnly/>
         </div>
-        <svg width={WIDTH} height={HEIGHT}>
+        <svg width={WIDTH_1} height={HEIGHT_1}>
             <g>
                 <GeoMap map={map} colormap={cmapl} width={geoWidth} height={geoHeight}
                   data={prpData} offsetX={xGeoLeft} offsetY={yGeoLeft} dkey={"por_"+year}
@@ -199,10 +200,12 @@ function App() {
             </g>
         </svg>
         <div onChange={onValueChange}>
+            <p>Sort the bars by:</p>
             <input type="radio" value="Population" name="sort_mode"/> Population
+            <br></br>
             <input type="radio" value="GDP" name="sort_mode"/> GDP
         </div>
-        <svg width={WIDTH} height={HEIGHT}>
+        <svg width={WIDTH_2} height={HEIGHT_2}>
             <g>
                 <BarChart offsetX={500} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
                 selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince}
@@ -281,7 +284,7 @@ function App() {
                 <option value="Xinjiang">Xinjiang</option>
             </select>
         </div>
-        <svg id="linechart" width={1.25*WIDTH} height={HEIGHT}>
+        <svg id="linechart" width={WIDTH_3} height={HEIGHT_3}>
             <g>
                 <LineChart chartType={"PPRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
                     provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the permanent resident population"}/>
