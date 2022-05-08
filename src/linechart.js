@@ -72,7 +72,7 @@ export function LineChart(props) {
             <line x1={0} y1={height} x2={width} y2={height} stroke={`black`} />
             {xTicks.map( tickValue => {
                 return <g key={tickValue} transform={`translate(${xScale(tickValue)}, ${height})`}>
-                        <line y2={5} stroke={"black"} />
+                        <line y2={-height} stroke={"gray"} />
                         <text style={{ textAnchor:'middle', fontSize:'18px'}} y={20}>
                         {tickValue}
                         </text>
