@@ -14,14 +14,14 @@ export function BarChart(props) {
             .domain([0, max(gdpdata, d => d[_key])])
             .nice();
         const getColor1 = (selectedProvince, Province) => {
-                return selectedProvince&&Province===selectedProvince ? "red" : "#99d594";
+                return selectedProvince&&Province===selectedProvince ? "darkviolet" : "red";
             };
         const getColor2 = (selectedProvince, Province) => {
-                return selectedProvince&&Province===selectedProvince ? "blue" : "#fc8d59";
+                return selectedProvince&&Province===selectedProvince ? "gold" : "mediumblue";
             };
     
     return <g transform={`translate(${offsetX}, ${offsetY})`} >
-        <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width/3}, 0)`}>
+        <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width*2/5}, 0)`}>
                 {"Total resident population"}
         </text>
         {<line y2={height/2} stroke='black'/>}
@@ -43,7 +43,7 @@ export function BarChart(props) {
             <XAxis xScale={xScale} height={height} width={width} />
 
         <g transform={`translate(${0}, ${height/2})`}>
-            <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width*2/5}, ${height/2+50})`}>
+            <text style={{ textAnchor:'start', fontSize:'15px'}} transform={`translate(${width*2/5}, ${height/2-10})`}>
             {"GDP per capita"}
             </text>
             {gdpdata.map( d =>
