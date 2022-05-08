@@ -19,14 +19,15 @@ export function LineChart(props) {
     var province2 = Object.values(provinceTwo).slice(1);
     var p1 = Object.entries(provinceOne).slice(1);
     var p2 = Object.entries(provinceTwo).slice(1);
-    //console.log(p1);
+    //console.log(province1);
     //console.log(p2);
-    if(chartType === "PRP")
+    if(chartType === "PPRP")
     {
         province1 = province1.slice(16);
         province2 = province2.slice(16);
         p1 = p1.slice(16).reverse();
-        p2 = p2.slice(16).reverse();
+        p2 = p2.slice(16).reverse();        
+        //console.log(province1);
         //console.log(p1);
         //console.log(p2);
         for(var i = 0; i < 16; i++)
@@ -35,12 +36,23 @@ export function LineChart(props) {
             p2[i][0] = +p2[i][0].slice(4);
         }
     }
-    else{
+    else if(chartType === "GDP"){
         for(var i = 0; i < 16; i++)
         {
             p1[i][0] = +p1[i][0].slice(1);
             p2[i][0] = +p2[i][0].slice(1);
         }        
+    }
+    else if(chartType === "PRP"){
+        province1 = province1.slice(0,16);
+        province2 = province2.slice(0,16);
+        p1 = p1.slice(0,16);
+        p2 = p2.slice(0,16);
+        for(var i = 0; i < 16; i++)
+        {
+            p1[i][0] = +p1[i][0].slice(1);
+            p2[i][0] = +p2[i][0].slice(1);
+        }  
     }
 
     // console.log(p1);

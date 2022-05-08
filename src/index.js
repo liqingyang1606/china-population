@@ -274,10 +274,12 @@ function App() {
         </div>
         <svg id="linechart" width={1.25*WIDTH} height={HEIGHT}>
             <g>
-                <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
+                <LineChart chartType={"PPRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
                     provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the permanent resident population"}/>
                 <LineChart chartType={"GDP"} offsetX={1250 + 10} offsetY={yGeoRight} width={geoWidth} height={geoHeight} 
                     provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond} yTag={"Per capita GDP (￥10000)"}/>
+                <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={geoHeight + margin.gap + 100} width={geoWidth} height={geoHeight} 
+                    provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Permanent resident population (10000)"}/>
             </g>
         </svg>
     </div>
