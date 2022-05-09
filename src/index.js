@@ -127,11 +127,12 @@ function App() {
     };
     // constants
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
-    const geoWidth = 1000, geoHeight = 600;  // geo-map & line chart size
-    const barHeight = 1200, barWidth = 1000;
-    const WIDTH_1 = 2000, HEIGHT_1 = 800;  // No.1 geo-map x 2
-    const WIDTH_2 = 2000, HEIGHT_2 = 1400;  // No.2 bar-chart x 1
+    const geoWidth = 500, geoHeight = 300;  // geo-map & line chart size
+    const barHeight = 600, barWidth = 500;
+    const WIDTH_1 = 1200, HEIGHT_1 = 450;  // No.1 geo-map x 2
+    const WIDTH_2 = 1000, HEIGHT_2 = 700;  // No.2 bar-chart x 1
     const WIDTH_3 = 1.25 * WIDTH_1, HEIGHT_3 = HEIGHT_2;  // No.3 line-chart x 3
+    //const WIDTH_3 = 1200, HEIGHT_3 = 1000;
     // read data
     const map = useMap(mapUrl);  // read map
     const gdpData = useData(gdpUrl);    // read GDP data
@@ -181,6 +182,9 @@ function App() {
 
     // return the whole visualization
     return <div>
+        <h1>Trend of Population and GDP in Each Province of Mainland China</h1>
+        <p>(excluding Hongkong, Macau and Taiwan)</p>
+        <h2>1. geo-maps visualizing Population/GDP by province & year</h2>
         <div>
             <input key="slider" type="range" min='2005' max='2020' value={year} step='1' onChange={changeHandler}/>
             <input key="yearText" type="text" value={year} readOnly/>
@@ -199,6 +203,7 @@ function App() {
                 <text x={xTextRight} y={yTextRight}>GDP per capita</text>
             </g>
         </svg>
+        <h2>2. Bar chart of Population/GDP rankings by province</h2>
         <div onChange={onValueChange}>
             <p>Sort the bars by:</p>
             <input type="radio" value="Population" name="sort_mode"/> Population
@@ -213,6 +218,7 @@ function App() {
             </g>
         </svg>
         <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>
+        <h2>3. Line chart: Comparison of Population/GDP trends of two selected provinces</h2>
         <div>
             <label>Province1: </label>
             <select id="province1" name="province1" onChange={handleProvinceFirstChange}>
