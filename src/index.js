@@ -298,8 +298,8 @@ function App() {
                     provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond} yTag={"Per capita GDP (￥10000)"}/>
                 <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={geoHeight + 2*margin.gap} width={geoWidth} height={geoHeight} 
                     provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Permanent resident population (10000)"}/>
-                <GeoMapNull offsetX={1250 + 10} offsetY={geoHeight + margin.gap + 100} map={map} width={geoWidth} height={geoHeight} 
-                data={prpData} selectedProv1={provinceFirst} selectedProv2={provinceSecond} color1={"#2b83ba"} color2={"#fdae61"}/>
+                <GeoMapNull offsetX={xGeoRight + 10} offsetY={geoHeight + 2*margin.gap} map={map} width={geoWidth} height={geoHeight} 
+                    data={prpData} selectedProv1={provinceFirst} selectedProv2={provinceSecond} color1={"#2b83ba"} color2={"#fdae61"}/>
             </g>
         </svg>
     </div>
