@@ -6,6 +6,7 @@ export function Tooltip(props) {
         return <div></div>;
     }
     else {
+        let disValue = d.v.toFixed(2);
         const divStyle = {
             position: "absolute",
             textAlign: "left",
@@ -22,7 +23,7 @@ export function Tooltip(props) {
         };
         return <div style={divStyle}>
             <p>{prov}</p>
-            <p>{d.k}: {d.v}</p>
+            <p>{d.k}: {disValue}</p>
         </div>
     }
 }
