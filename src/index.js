@@ -160,9 +160,9 @@ function App() {
     const gdppoOneYear = gdppoData.map(d => d[_key]);
     //getPortion(prpData, year);
     const cmapl = scaleSequential(interpolateBuPu)
-      .domain([min(prpOneYear), max(prpOneYear)]);  // left colormap
+      .domain([0, max(prpOneYear)]);  // left colormap
     const cmapr = scaleSequential(interpolateBuPu)
-      .domain([min(gdppoOneYear), max(gdppoOneYear)]);  // right colormap
+      .domain([0, max(gdppoOneYear)]);  // right colormap
     const xGeoLeft = margin.left;
     const yGeoLeft = margin.top;
     const xGeoRight = xGeoLeft + geoWidth + margin.gap;
