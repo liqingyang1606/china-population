@@ -128,7 +128,7 @@ function App() {
     // constants
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
     const geoWidth = 500, geoHeight = 300;  // geo-map & line chart size
-    const barHeight = 600, barWidth = 500;
+    const barHeight = 500, barWidth = 400;
     const WIDTH_1 = 1200, HEIGHT_1 = 450;  // No.1 geo-map x 2
     const WIDTH_2 = 1000, HEIGHT_2 = 700;  // No.2 bar-chart x 1
     const WIDTH_3 = WIDTH_1, HEIGHT_3 = 1.1*HEIGHT_2;  // No.3 line-chart x 3
@@ -212,7 +212,7 @@ function App() {
         </div>
         <svg width={WIDTH_2} height={HEIGHT_2}>
             <g>
-                <BarChart offsetX={500} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
+                <BarChart offsetX={250} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
                 selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince}
                 mode={sortMode}/>
             </g>
