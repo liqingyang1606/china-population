@@ -125,6 +125,18 @@ function App() {
         setToolLeft(null);
         setToolTop(null);
     };
+    const mouseOverBar = (prov, event, key, value) => {
+        setSelectedProvince(prov);
+        setToolData({k:key, v:value});
+        setToolLeft(event.pageX);
+        setToolTop(event.pageY);
+    };
+    const mouseOutBar = () => {
+        setSelectedProvince(null);
+        setToolData(null);
+        setToolLeft(null);
+        setToolTop(null);
+    };
     // constants
     const margin = {left: 50, right: 50, top: 50, bottom: 50, gap: 50};
     const geoWidth = 500, geoHeight = 300;  // geo-map & line chart size
@@ -213,8 +225,8 @@ function App() {
         <svg width={WIDTH_2} height={HEIGHT_2}>
             <g>
                 <BarChart offsetX={250} offsetY={50} data={prpData} gdpdata={gdppoData} height={barHeight} width={barWidth} 
-                selyear={year} selectedProvince={selectedProvince} setSelectedProvince={setSelectedProvince}
-                mode={sortMode}/>
+                selyear={year} mode={sortMode} selectedProvince={selectedProvince}
+                MouseOver={mouseOverBar} MouseOut={mouseOutBar}/>
             </g>
         </svg>
         <Tooltip prov={selectedProvince} d={toolData} left={toolLeft} top={toolTop}/>

@@ -4,7 +4,7 @@ import { scaleLinear, scaleBand, area, max, min, curveBasis } from "d3";
 
 export function BarChart(props) {
     const { offsetX, offsetY, data, gdpdata, height, width,
-        selyear, selectedProvince, setSelectedProvince, mode } = props;
+        selyear, mode, selectedProvince, MouseOver, MouseOut } = props;
         const _key = '_' + selyear;
         // interaction: sorting
         let scaleData = data;
@@ -52,12 +52,13 @@ export function BarChart(props) {
                     </text>
                 </g>
             )}
-            { data.map( d =>
+            { // upper bars
+              data.map( d =>
                 <rect key={d.Province+"barUp"} x={xScale(d.Province)} y={yScale1(d[_key])}
                 width={xScale.bandwidth()} height={height/2-yScale1(d[_key])} stroke="black" 
                 fill={getColor1(selectedProvince, d.Province)} 
-                onMouseEnter={() => setSelectedProvince(d.Province)} 
-                onMouseOut={()=> setSelectedProvince(null)} />  
+                onMouseEnter={() => MouseOver(d.Province, event, "Population", d[_key])} 
+                onMouseOut={MouseOut} />  
             ) }
             <XAxis xScale={xScale} height={height} width={width} />
 
@@ -66,12 +67,13 @@ export function BarChart(props) {
               transform={`translate(${width * 2/5}, ${height/2 + 100})`}>
                 {"GDP per capita"}
             </text>
-            {gdpdata.map( d =>
+            {  // lower bars
+              gdpdata.map( d =>
                 <rect key={d.Province+"barDown"} x={xScale(d.Province)} y={0}
                 width={xScale.bandwidth()} height={yScale2(d[_key])} stroke="black" 
                 fill={getColor2(selectedProvince, d.Province)}
-                onMouseEnter={() => setSelectedProvince(d.Province)} 
-                onMouseOut={()=> setSelectedProvince(null)} />
+                onMouseEnter={() => MouseOver(d.Province, event, "GDP per capita", d[_key])} 
+                onMouseOut={MouseOut} />
                 )}
             {<line y2={height/2} stroke='black'/>}
             {yScale2.ticks(5).reverse().map(tickValue => 
