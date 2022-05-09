@@ -25,7 +25,7 @@ export function GeoMap(props) {
             if(province[0]) {
                 t_prov = province[0].Province;
                 // Population is portion, GDP is not
-                t_key = (dkey.match("por_") == null) ? "GDP per capita" : "Proportion of population"
+                t_key = (dkey.match("por_") == null) ? "GDP per capita" : "Proportion of population";
                 t_value = province[0][dkey];
                 return <path key={feature.properties.NAME_1 + "boundary"} className={"boundary"}
                   d={path(feature)} opacity={1.0}
