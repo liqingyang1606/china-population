@@ -31,10 +31,12 @@ export function BarChart(props) {
             .domain([0, max(gdpdata, d => d[_key])])
             .nice();
         const getColor1 = (selectedProvince, Province) => {
-                return selectedProvince&&Province===selectedProvince ? "darkviolet" : "red";
+                //return selectedProvince&&Province===selectedProvince ? "darkviolet" : "rgb()";
+                return selectedProvince&&Province===selectedProvince ? "#FF8C00" : "#6495ED";
             };
         const getColor2 = (selectedProvince, Province) => {
-                return selectedProvince&&Province===selectedProvince ? "gold" : "mediumblue";
+                //return selectedProvince&&Province===selectedProvince ? "gold" : "mediumblue";
+                return selectedProvince&&Province===selectedProvince ? "gold" : "#9932CC";
             };
     
     return <g transform={`translate(${offsetX}, ${offsetY})`} >
