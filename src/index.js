@@ -131,7 +131,7 @@ function App() {
     const barHeight = 600, barWidth = 500;
     const WIDTH_1 = 1200, HEIGHT_1 = 450;  // No.1 geo-map x 2
     const WIDTH_2 = 1000, HEIGHT_2 = 700;  // No.2 bar-chart x 1
-    const WIDTH_3 = 1.25 * WIDTH_1, HEIGHT_3 = HEIGHT_2;  // No.3 line-chart x 3
+    const WIDTH_3 = WIDTH_1, HEIGHT_3 = 1.1*HEIGHT_2;  // No.3 line-chart x 3
     //const WIDTH_3 = 1200, HEIGHT_3 = 1000;
     // read data
     const map = useMap(mapUrl);  // read map
@@ -294,9 +294,9 @@ function App() {
             <g>
                 <LineChart chartType={"PPRP"} offsetX={xGeoLeft + 10} offsetY={yGeoLeft} width={geoWidth} height={geoHeight} 
                     provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Proportion of the permanent resident population"}/>
-                <LineChart chartType={"GDP"} offsetX={1250 + 10} offsetY={yGeoRight} width={geoWidth} height={geoHeight} 
+                <LineChart chartType={"GDP"} offsetX={xGeoRight + 10} offsetY={yGeoRight} width={geoWidth} height={geoHeight} 
                     provinceOne={gdppoProvinceFirst} provinceTwo={gdppoProvinceSecond} yTag={"Per capita GDP (￥10000)"}/>
-                <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={geoHeight + margin.gap + 100} width={geoWidth} height={geoHeight} 
+                <LineChart chartType={"PRP"} offsetX={xGeoLeft + 10} offsetY={geoHeight + 2*margin.gap} width={geoWidth} height={geoHeight} 
                     provinceOne={prpPortionProvinceFirst} provinceTwo={prpPortionProvinceSecond} yTag={"Permanent resident population (10000)"}/>
             </g>
         </svg>

@@ -73,32 +73,32 @@ export function LineChart(props) {
             {yTicks.map( tickValue => {
                 return <g key={tickValue} transform={`translate(-10, ${yScale(tickValue)})`}>
                         <line x2={width} stroke={"gray"} />
-                        <text style={{ textAnchor:'end', fontSize:'18px' }}>
+                        <text style={{ textAnchor:'end', fontSize:'10px' }}>
                         {tickValue}
                         </text>
                     </g> 
             })}
-            <text style={{ textAnchor:'start', fontSize:'18px'}} transform={`translate(10, -5)rotate(0)`}>
+            <text style={{ textAnchor:'start', fontSize:'10px'}} transform={`translate(0, -5)rotate(0)`}>
                     {yTag}
                 </text>
             <line x1={0} y1={height} x2={width} y2={height} stroke={`black`} />
             {xTicks.map( tickValue => {
                 return <g key={tickValue} transform={`translate(${xScale(tickValue)}, ${height})`}>
                         <line y2={-height} stroke={"gray"} />
-                        <text style={{ textAnchor:'middle', fontSize:'18px'}} y={20}>
+                        <text style={{ textAnchor:'middle', fontSize:'10px'}} y={20}>
                         {tickValue}
                         </text>
                 </g> 
             })}
-            <text style={{ textAnchor:'end', fontSize:'18px'}} transform={`translate(${width}, ${height-10})`}>
+            <text style={{ textAnchor:'end', fontSize:'10px'}} transform={`translate(${width}, ${height-10})`}>
                             {"Year"}
                 </text>
-            <path d={line(p1)} stroke={"#2b83ba"} strokeWidth={5} fill={"none"} />
-            <path d={line(p2)} stroke={"#fdae61"} strokeWidth={5} fill={"none"} />
-            <text style={{ textAnchor:'start', fontSize:'18px'}} transform={`translate(${xScale(2020)}, ${yScale(p1[0][1])})`}>
+            <path d={line(p1)} stroke={"#2b83ba"} strokeWidth={3} fill={"none"} />
+            <path d={line(p2)} stroke={"#fdae61"} strokeWidth={3} fill={"none"} />
+            <text style={{ textAnchor:'start', fontSize:'10px'}} transform={`translate(${xScale(2020)}, ${yScale(p1[0][1])})`}>
                             {provinceOne['Province']}
                 </text>
-            <text style={{ textAnchor:'start', fontSize:'18px'}} transform={`translate(${xScale(2020)}, ${yScale(p2[0][1])})`}>
+            <text style={{ textAnchor:'start', fontSize:'10px'}} transform={`translate(${xScale(2020)}, ${yScale(p2[0][1])})`}>
                             {provinceTwo['Province']}
                 </text>
             </g>
