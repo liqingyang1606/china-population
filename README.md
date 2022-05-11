@@ -4,4 +4,4 @@ This repository is used for the course project of **Information Visualization**.
 
 ## Link to our website
 
-Please visit [this link](./src/index.html) to see our visualization solution.
+Please visit [this link](./src/index.html){:target="_blank"} to see our visualization solution.
